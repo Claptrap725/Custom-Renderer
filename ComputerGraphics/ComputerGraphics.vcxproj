@@ -151,9 +151,6 @@
     <ClInclude Include="shaders.h" />
     <ClInclude Include="shapes.h" />
   </ItemGroup>
-  <ItemGroup>
-    <Image Include="C:\Users\trist\Pictures\me.jpg" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -19,6 +19,8 @@ shader GetShaderBasic()
 	const char * basicVertexShader =
 		"#version 430\n"
 		"layout (location = 0) in vec4 position;\n"
+		"layout (location = 1) in vec4 color;\n"
+		"layout (location = 2) in vec2 uv;\n"
 
 		"layout (location = 0) uniform mat4 proj;\n"
 		"layout (location = 1) uniform mat4 view;\n"
@@ -36,8 +38,8 @@ shader GetShaderBasic()
 		"#version 430\n"
 		"in vec4 vColor;\n"
 		"in vec2 vUV;\n"
-		"out vec4 outoutColor;\n"
-		"uniform sampler2D mainTexture;\n"
+		"out vec4 outputColor;\n"
+		"layout (location = 3) uniform sampler2D mainTexture;\n"
 		"void main()\n"
 		"{"
 			"outputColor = texture(mainTexture, vUV);"

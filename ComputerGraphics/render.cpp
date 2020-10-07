@@ -28,7 +28,7 @@ geometry loadGeometry(const char * filePath)
 	std::vector<unsigned int> indices;
 
 	size_t offset = 0;
-	for (size_t i = 0; shapes[0].mesh.num_face_vertices.size(); i++)
+	for (size_t i = 0; i < shapes[0].mesh.num_face_vertices.size(); i++)
 	{
 		unsigned char faceVertices = shapes[0].mesh.num_face_vertices[i];
 
@@ -48,8 +48,8 @@ geometry loadGeometry(const char * filePath)
 			tinyobj::real_t colG = 0.2f;
 			tinyobj::real_t colB = 0.2f;
 
-			tinyobj::real_t texU = vertexAttributes.texcoords[3 * idx.texcoord_index + 0];
-			tinyobj::real_t texV = vertexAttributes.texcoords[3 * idx.texcoord_index + 1];
+			tinyobj::real_t texU = vertexAttributes.texcoords[2 * idx.texcoord_index + 0];
+			tinyobj::real_t texV = vertexAttributes.texcoords[2 * idx.texcoord_index + 1];
 
 			vertices.push_back(vertex{ {posX, posY, posZ, 1.0f}, {colR, colG, colB, 1.0f}, {texU, texV} });
 			indices.push_back(faceVertices * i * j);
@@ -154,17 +154,17 @@ texture loadTexture(const char * filePath)
 	assert(filePath != nullptr && "File path was invalid.");
 
 	int imageWidth = 0, imageHeight = 0, imageFormat = 0;
-	unsigned char * pixels = nullptr;
+	unsigned char * rawPixelData = nullptr;
 
 	stbi_set_flip_vertically_on_load(true);
-	pixels = stbi_load(filePath, &imageWidth, &imageHeight, &imageFormat, STBI_default);
+	rawPixelData = stbi_load(filePath, &imageWidth, &imageHeight, &imageFormat, STBI_default);
 
-	assert(pixels != nullptr && "Image failed to load.");
+	assert(rawPixelData != nullptr && "Image failed to load.");
 
-	texture newTexture = makeTexture(imageWidth, imageHeight, imageFormat, pixels);
+	texture newTexture = makeTexture(imageWidth, imageHeight, imageFormat, rawPixelData);
 	assert(newTexture.handle != 0 && "Failed to create texture.");
 
-	stbi_image_free(pixels);
+	stbi_image_free(rawPixelData);
 
 	return newTexture;
 }
