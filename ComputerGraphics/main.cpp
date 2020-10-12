@@ -22,14 +22,18 @@ int main()
 	quad.transform.scale = glm::vec3(15, 15, 1);
 
 	texture me = loadTexture("res\\Profile picture.png");
-	shader basicShader = GetShaderBasic();
-	setUniform(basicShader, 3, me, 0);
+	shader lightShader = GetDiffuseShader();
+	setUniform(lightShader, 3, me, 0);
 
 	geometry vase = loadGeometry("res\\SimpleVase.obj");
 	vase.transform.pos = glm::vec3(0, 0, 0);
 	vase.transform.rot = glm::vec3(0, 0, 0);
 	vase.transform.scale = glm::vec3(5, 5, 1);
-	shader red = GetShaderByColor(COLORRED);
+
+	light sun = { {-1, 0, 0}, {1, 1, 1} };
+	setUniform(lightShader, 5, { 0.1f, 0.1f, 0.1f });
+	setUniform(lightShader, 6, sun.color);
+	setUniform(lightShader, 7, sun.direction);
 
 	while (!game.shouldClose())
 	{
@@ -49,18 +53,15 @@ int main()
 			vase.transform.rot += glm::vec3(0, 0, 0.3);
 		
 
-		//setUniform(basicShader, camProj, camVeiw, quad.transform.matrix());
-		//setUniform(red, camProj, camVeiw, vase.transform.matrix());
-		setUniform(basicShader, camProj, camVeiw, vase.transform.matrix());
+		setUniform(lightShader, camProj, camVeiw, vase.transform.matrix());
 		game.clear();
 
 		// implement render logic here
-		//draw(basicShader, quad);
-		draw(basicShader, vase);
+		draw(lightShader, vase);
 	}
 
-	freeGeometry(quad);
-	freeShader(basicShader);
+	freeGeometry(vase);
+	freeShader(lightShader);
 	game.term();
 
 	return 0;

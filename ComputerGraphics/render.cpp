@@ -51,8 +51,12 @@ geometry loadGeometry(const char * filePath)
 			tinyobj::real_t texU = vertexAttributes.texcoords[2 * idx.texcoord_index + 0];
 			tinyobj::real_t texV = vertexAttributes.texcoords[2 * idx.texcoord_index + 1];
 
-			vertices.push_back(vertex{ {posX, posY, posZ, 1.0f}, {colR, colG, colB, 1.0f}, {texU, texV} });
-			indices.push_back(faceVertices * i * j);
+			tinyobj::real_t norX = vertexAttributes.normals[3 * idx.normal_index + 0];
+			tinyobj::real_t norY = vertexAttributes.normals[3 * idx.normal_index + 1];
+			tinyobj::real_t norZ = vertexAttributes.normals[3 * idx.normal_index + 2];
+
+			vertices.push_back(vertex{ {posX, posY, posZ, 1.0f}, {colR, colG, colB, 1.0f}, {texU, texV}, {norX, norY, norZ} });
+			indices.push_back(faceVertices * i + j);
 		}
 
 		offset += faceVertices;
@@ -92,6 +96,9 @@ geometry makeGeometry(vertex * verts, size_t vertCount, unsigned int * indices, 
 
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), (void*)offsetof(vertex, uv));
+
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(vertex), (void*)offsetof(vertex, nor));
 
 	// unbind the buffers (VAO the the buffers)
 	glBindVertexArray(0);
@@ -230,6 +237,11 @@ void setUniform(const shader & sha, GLuint location, const texture & tex, int te
 	glBindTexture(GL_TEXTURE_2D, tex.handle);
 
 	glProgramUniform1i(sha.program, location, textureSlot);
+}
+
+void setUniform(const shader & sha, GLuint location, const glm::vec3 & value)
+{
+	glProgramUniform3fv(sha.program, location, 1, glm::value_ptr(value));
 }
 
 void setUniform(const shader & sha, const glm::mat4 & camProj, const glm::mat4 & camView, const glm::mat4 & triModel)

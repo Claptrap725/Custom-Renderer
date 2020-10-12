@@ -14,6 +14,51 @@
 #define COLORGRAY glm::vec4(0.5f,0.5f,0.5f,1.0f)
 #define COLORLIGHTGRAY glm::vec4(0.8f,0.8f,0.8f,1.0f)
 
+shader GetDiffuseShader()
+{
+	const char * basicVertexShader =
+		"#version 430\n"
+		"layout (location = 0) in vec4 position;\n"
+		"layout (location = 1) in vec4 color;\n"
+		"layout (location = 2) in vec2 uv;\n"
+		"layout (location = 3) in vec3 nor;\n"
+
+		"layout (location = 0) uniform mat4 proj;\n"
+		"layout (location = 1) uniform mat4 view;\n"
+		"layout (location = 2) uniform mat4 model;\n"
+		
+		"out vec2 vUV;\n"
+		"out vec3 vNor;\n"
+		"void main()\n"
+		"{"
+			"gl_Position = proj * view * model * position;"
+			"vUV = uv;\n"
+			"vNor = nor.xyz;\n"
+		"}";
+
+	const char * basicFragShader =
+		"#version 430\n"
+		"in vec2 vUV;\n"
+		"in vec3 vNor;\n"
+		"out vec4 outputColor;\n"
+		"layout (location = 3) uniform sampler2D mainTexture;\n"
+
+		"layout (location = 5) uniform vec3 ambient;"
+		"layout (location = 6) uniform vec3 lightDiffuse;"
+		"layout (location = 7) uniform vec3 lightDirection;"
+
+		"void main()\n"
+		"{"
+			"vec3 ambientColor = ambient;"
+			"float lambert = max(0.0f, dot(vNor, -lightDirection));"
+			"vec3 diffuseColor = texture(mainTexture, vUV).xyz * lightDiffuse * lambert;"
+			"outputColor = vec4(ambientColor + diffuseColor, 1.0f);"
+		"}";
+
+
+	return shader();
+}
+
 shader GetShaderBasic()
 {
 	const char * basicVertexShader =

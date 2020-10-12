@@ -5,9 +5,9 @@ geometry GetTriangle()
 {
 	vertex triVerts[] =
 	{
-		{{1, 0, 0, 1}},		// 0 bot right
-		{{0, 1, 0, 1}},		// 1 top
-		{{0, 0, 1, 1}}		// 2 bot left
+		{{1, 0, 0, 1}, {1.0f, 1.0f, 1.0f, 1.0f}, {1, 0}, {0.0f,0.0f,-1.0f}},		// 0 bot right
+		{{0, 1, 0, 1}, {1.0f, 1.0f, 1.0f, 1.0f}, {1, 0}, {0.0f,0.0f,-1.0f}},		// 1 top
+		{{0, 0, 1, 1}, {1.0f, 1.0f, 1.0f, 1.0f}, {1, 0}, {0.0f,0.0f,-1.0f}}		// 2 bot left
 	};
 
 	unsigned int triIndices[] = { 0,1,2 };
@@ -24,10 +24,10 @@ geometry GetQuad()
 {
 	vertex quadVerts[] =
 	{
-		{{0.5, -0.5, 0, 1}, {1.0f, 1.0f, 1.0f, 1.0f}, {1, 0} },	// 0 bot right
-		{{0.5, 0.5, 0, 1}, {1.0f, 1.0f, 1.0f, 1.0f}, {1, 1} },	// 1 top right
-		{{-0.5, 0.5, 0, 1}, {1.0f, 1.0f, 1.0f, 1.0f}, {0, 1} },	// 2 top left
-		{{-0.5, -0.5, 0, 1}, {1.0f, 1.0f, 1.0f, 1.0f}, {0, 0} }	// 3 bot left
+		{{0.5, -0.5, 0, 1}, {1.0f, 1.0f, 1.0f, 1.0f}, {1, 0}, {0.0f,0.0f,-1.0f}},	// 0 bot right
+		{{0.5, 0.5, 0, 1}, {1.0f, 1.0f, 1.0f, 1.0f}, {1, 1}, {0.0f,0.0f,-1.0f} },	// 1 top right
+		{{-0.5, 0.5, 0, 1}, {1.0f, 1.0f, 1.0f, 1.0f}, {0, 1}, {0.0f,0.0f,-1.0f} },	// 2 top left
+		{{-0.5, -0.5, 0, 1}, {1.0f, 1.0f, 1.0f, 1.0f}, {0, 0}, {0.0f,0.0f,-1.0f} }	// 3 bot left
 	};
 
 	unsigned int quadIndices[] = { 0,1,2, 0,3,2 };
@@ -44,10 +44,10 @@ geometry GetQuad(float width, float height)
 {
 	vertex quadVerts[] =
 	{
-		{{width / 2, -height / 2, 0, 1}},		// 0 bot right
-		{{width / 2, height / 2, 0, 1}},		// 1 top right
-		{{-width / 2, height / 2, 0, 1}},		// 2 top left
-		{{-width / 2, -height / 2, 0, 1}}			// 3 bot left
+		{{width / 2, -height / 2, 0, 1}, {1.0f, 1.0f, 1.0f, 1.0f}, {1, 0}, {0.0f,0.0f,-1.0f}},		// 0 bot right
+		{{width / 2, height / 2, 0, 1}, {1.0f, 1.0f, 1.0f, 1.0f}, {1, 0}, {0.0f,0.0f,-1.0f}},		// 1 top right
+		{{-width / 2, height / 2, 0, 1}, {1.0f, 1.0f, 1.0f, 1.0f}, {1, 0}, {0.0f,0.0f,-1.0f}},		// 2 top left
+		{{-width / 2, -height / 2, 0, 1}, {1.0f, 1.0f, 1.0f, 1.0f}, {1, 0}, {0.0f,0.0f,-1.0f}}			// 3 bot left
 	};
 
 	unsigned int quadIndices[] = { 0,1,2, 0,3,2 };

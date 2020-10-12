@@ -10,6 +10,7 @@ struct vertex
 	glm::vec4 pos;
 	glm::vec4 color;
 	glm::vec2 uv;
+	glm::vec3 nor;
 };
 
 struct transform
@@ -49,6 +50,12 @@ struct shader
 	GLuint program;
 };
 
+struct light
+{
+	glm::vec3 direction;
+	glm::vec3 color;
+};
+
 struct texture
 {
 	GLuint handle;
@@ -72,3 +79,4 @@ void draw(const shader & sha, const geometry & geo);
 void setUniform(const shader& sha, GLuint location, const glm::mat4& value);
 void setUniform(const shader & sha, const glm::mat4 & camProj, const glm::mat4 & camView, const glm::mat4 & triModel);
 void setUniform(const shader& sha, GLuint location, const texture &tex, int textureSlot);
+void setUniform(const shader& sha, GLuint location, const glm::vec3 &value);
