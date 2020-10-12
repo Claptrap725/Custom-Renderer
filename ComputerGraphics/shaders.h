@@ -56,7 +56,7 @@ shader GetDiffuseShader()
 		"}";
 
 
-	return shader();
+	return makeShader(basicVertexShader, basicFragShader);
 }
 
 shader GetShaderBasic()
