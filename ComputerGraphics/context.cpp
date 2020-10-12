@@ -54,6 +54,15 @@ bool context::init(int width, int height, const char* title)
 	// set up defaults
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 
+
+	glEnable(GL_CULL_FACE);   // ogl defaults to off
+	glCullFace(GL_BACK);      // cull back faces
+	glFrontFace(GL_CCW);      // ccw faces are front faces (ogl defaults to CCW)
+
+	// enable depth testing -- make sure to clear the depth buffer as well
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+
 	// return true if success
 	return true;
 }
